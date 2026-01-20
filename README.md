@@ -1,7 +1,7 @@
 # Netflix-GPT
 
-- Created by Vite
-- Installed and Configured Tailwind
+- Created by Vite + React
+- Tailwind CSS Used.
 
 # Features
 
