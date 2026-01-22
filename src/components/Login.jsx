@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
-import { checkValidData } from "../utils/Validate";
+import { checkValidData } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
-import { addUser } from "../utils/Store/Slice/userSlice";
+import { addUser } from "../utils/store/slice/userSlice";
 import { BG_IMG, DEFAULT_PHOTOURL } from "../utils/constant";
 
 const Login = () => {

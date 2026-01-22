@@ -3,7 +3,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { addUser, removeUser } from "../utils/Store/Slice/userSlice";
+import { addUser, removeUser } from "../utils/store/slice/userSlice";
 import { LOGO } from "../utils/constant";
 
 const Header = () => {
