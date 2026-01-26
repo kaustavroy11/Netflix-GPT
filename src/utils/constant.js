@@ -7,7 +7,7 @@ export const DEFAULT_PHOTOURL =
 export const BG_IMG =
   "https://assets.nflxext.com/ffe/siteui/vlv3/797df41b-1129-4496-beb3-6fc2f29c59d3/web/IN-en-20260112-TRIFECTA-perspective_004732f9-7464-4a7c-940b-4a51c4f0f73f_large.jpg";
 
-const API_TOKEN = import.meta.env.VITE_TMDB_API_TOKEN;
+export const API_TOKEN = import.meta.env.VITE_TMDB_API_TOKEN;
 
 export const API_OPTIONS = {
   method: "GET",
@@ -24,3 +24,5 @@ export const SUPPORTED_LANGUAGES = [
   { identifier: "hi", name: "Hindi" },
   { identifier: "es", name: "Spanish" },
 ];
+
+export const OPENAI_KEY = import.meta.env.VITE_OPENAI_GPT_KEY;
