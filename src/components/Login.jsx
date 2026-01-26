@@ -91,7 +91,7 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <div className="absolute -z-10">
+      <div className="absolute -z-10 w-screen">
         <img src={BG_IMG} alt="background-img" />
       </div>
       <form

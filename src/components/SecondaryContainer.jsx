@@ -1,21 +1,40 @@
 import { useSelector } from "react-redux";
-import MovieList from "./MovieList";
+import ContentList from "./ContentList";
 
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
+  const tvShows = useSelector((store) => store.tvShows);
 
   return (
-    movies.nowPlayingMovies && (
-      <div className="bg-black">
-        <div className="-mt-50 pl-12 relative z-20">
-          <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies} />
-          <MovieList title={"Trending"} movies={movies.nowPlayingMovies} />
-          <MovieList title={"Popular"} movies={movies.popularMovies} />
-          <MovieList
-            title={"Upcoming Movies"}
-            movies={movies.nowPlayingMovies}
+    movies && (
+      <div className="bg-black min-h-screen w-screen">
+        <div className="-mt-50 pl-12 relative z-20 flex flex-col gap-14 pb-36">
+          <ContentList title={"Now Playing"} media={movies.nowPlayingMovies} />
+          <ContentList
+            title={"Trending Movies"}
+            media={movies.trendingMovies}
           />
-          <MovieList title={"Horror"} movies={movies.nowPlayingMovies} />
+          <ContentList
+            title={"Top Rated Movies"}
+            media={movies.topRatedMovies}
+          />
+          <ContentList title={"Popular Movies"} media={movies.popularMovies} />
+          <ContentList
+            title={"TV Shows Currently Streaming"}
+            media={tvShows.currentTvShows}
+          />
+          <ContentList
+            title={"Trending TV Shows"}
+            media={tvShows.trendingTvShows}
+          />
+          <ContentList
+            title={"Top Rated TV Shows"}
+            media={tvShows.topRatedTvShows}
+          />
+          <ContentList
+            title={"Popular TV Shows"}
+            media={tvShows.popularTvShows}
+          />
         </div>
       </div>
     )

@@ -10,11 +10,11 @@
   - Redirect to Browser Page
 - Browse (After Authentication)
   - Header
-  - Main Movie
-    - Tailer in Background
+  - Main Content
+    - Trailer in Background
     - Title & Description
-    - Movie Suggestions
-      - MovieList
+    - Content Suggestions
+      - ContentList
 - Netflix-GPT
   - Search Bar
-  - Movie Suggestions
+  - Content Suggestions
