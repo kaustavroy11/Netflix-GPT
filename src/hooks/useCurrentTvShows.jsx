@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constant";
 import { useEffect } from "react";
 import { addCurrentTvShows } from "../utils/store/slice/tvShowsSlice";
@@ -6,6 +6,8 @@ import { addCurrentTvShows } from "../utils/store/slice/tvShowsSlice";
 const useCurrentTvShows = () => {
   // Fetch Data from TMDB API and Update Store
   const dispatch = useDispatch();
+
+  const currentTvShows = useSelector((store) => store.tvShows.currentTvShows);
 
   const getCurrentTvShows = async () => {
     const data = await fetch(
@@ -17,7 +19,7 @@ const useCurrentTvShows = () => {
   };
 
   useEffect(() => {
-    getCurrentTvShows();
+    !currentTvShows && getCurrentTvShows();
   }, []);
 };
 

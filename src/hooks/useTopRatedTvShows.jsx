@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constant";
 import { useEffect } from "react";
 import { addTopRatedTvShows } from "../utils/store/slice/tvShowsSlice";
@@ -6,6 +6,8 @@ import { addTopRatedTvShows } from "../utils/store/slice/tvShowsSlice";
 const useTopRatedTvShows = () => {
   // Fetch Data from TMDB API and Update Store
   const dispatch = useDispatch();
+
+  const topRatedTvShows = useSelector((store) => store.tvShows.topRatedTvShows);
 
   const getTopRatedTvShows = async () => {
     const data = await fetch(
@@ -17,7 +19,7 @@ const useTopRatedTvShows = () => {
   };
 
   useEffect(() => {
-    getTopRatedTvShows();
+    !topRatedTvShows && getTopRatedTvShows();
   }, []);
 };
 

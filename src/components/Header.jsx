@@ -2,12 +2,13 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { addUser, removeUser } from "../utils/store/slice/userSlice";
 import { LOGO, SUPPORTED_LANGUAGES } from "../utils/constant";
 import { toggleGptSearchView } from "../utils/store/slice/gptSearchSlice";
 import { changeLanguage } from "../utils/store/slice/configSlice";
 import lang from "../utils/languageConstant";
+import { IoMdArrowDropdown } from "react-icons/io";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,8 @@ const Header = () => {
   const user = useSelector((store) => store.user);
   const showGptSearch = useSelector((store) => store.gptSearch.showGptSearch);
   const langKey = useSelector((store) => store.config.lang);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   const handleSignOut = () => {
     signOut(auth)
@@ -51,6 +54,20 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleGptSearchClick = () => {
     // Toggle GPT Search
     dispatch(toggleGptSearchView());
@@ -61,13 +78,13 @@ const Header = () => {
   };
 
   return (
-    <div className="absolute w-screen px-8 py-2 bg-linear-to-b from-black to-transparent z-10 flex justify-between items-center">
+    <div className="absolute w-screen px-8 py-2 bg-linear-to-b from-black to-transparent z-10 flex flex-col md:flex-row justify-between items-center ">
       <img className="w-44" src={LOGO} alt="logo" />
       {user && (
-        <div className="flex p-2">
+        <div className="flex justify-center items-center p-2">
           {showGptSearch && (
             <select
-              className="bg-gray-800 m-2 text-white w-25 p-2"
+              className="bg-gray-800 m-2 text-white w-25 p-2 rounded-md text-xs sm:text-sm md:text-base focus:outline-none"
               value={langKey}
               onChange={handleLanguageChange}
             >
@@ -79,15 +96,35 @@ const Header = () => {
             </select>
           )}
           <button
-            className="py-2 px-4 mx-4 my-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-lg font-semibold transition-all duration-200 hover:cursor-pointer"
+            className="text-sm md:text-base py-2 px-4 mx-4 my-2 bg-linear-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white rounded-lg font-semibold transition-all duration-200 hover:cursor-pointer"
             onClick={handleGptSearchClick}
           >
             {showGptSearch ? lang[langKey].homepage : "GPT Search"}
           </button>
-          <img className="w-12 h-12" src={user?.photoURL} alt="usericon" />
-          <button onClick={handleSignOut} className="font-bold text-white">
-            ({showGptSearch ? lang[langKey].signOut : "Sign Out"})
-          </button>
+          <div className="relative" ref={dropdownRef}>
+            <div
+              className="flex items-center gap-1 cursor-pointer"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              <img
+                className="w-10 h-10 rounded-md"
+                src={user?.photoURL}
+                alt="usericon"
+              />
+              <IoMdArrowDropdown className="text-white text-xl md:text-2xl" />
+            </div>
+
+            {showDropdown && (
+              <div className="absolute right-0 mt-2 bg-gray-800/80 text-white rounded-md shadow-lg w-32">
+                <button
+                  onClick={handleSignOut}
+                  className="w-full text-left px-4 py-2 text-sm rounded-md hover:bg-gray-900 transition hover:outline-1 hover:outline-offset-2 hover:cursor-pointer"
+                >
+                  {showGptSearch ? lang[langKey].signOut : "Sign Out"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>

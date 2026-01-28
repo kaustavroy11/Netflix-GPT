@@ -4,6 +4,7 @@ import GptContentSuggestions from "./GptContentSuggestions";
 import GptSearchBar from "./GptSearchBar";
 import { useEffect } from "react";
 import { changeLanguage } from "../utils/store/slice/configSlice";
+import { clearGptContentResult } from "../utils/store/slice/gptSearchSlice";
 
 const GptSearch = () => {
   const dispatch = useDispatch();
@@ -11,23 +12,24 @@ const GptSearch = () => {
   useEffect(() => {
     return () => {
       dispatch(changeLanguage("en"));
+      dispatch(clearGptContentResult());
     };
   }, [dispatch]);
 
   return (
-    <div className="relative min-h-screen w-screen">
-      <div className="absolute inset-0 -z-10">
+    <>
+      <div className="fixed -z-10 brightness-65">
         <img
           src={BG_IMG}
           alt="background-img"
-          className="w-full h-full object-cover"
+          className="h-screen w-screen object-cover"
         />
       </div>
-      <div className="pb-40">
+      <div className="pb-25 md:pb-50">
         <GptSearchBar />
         <GptContentSuggestions />
       </div>
-    </div>
+    </>
   );
 };
 
